@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cwmp="urn:dslforum-org:cwmp-1-2" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <soapenv:Header>
+        <cwmp:ID soapenv:mustUnderstand="1">9_THOM_TR69_ID</cwmp:ID>
+    </soapenv:Header>
+    <soapenv:Body>
+        <cwmp:Inform>
+            <DeviceId>
+                <Manufacturer>Technicolor</Manufacturer>
+                <OUI>0876FF</OUI>
+                <ProductClass>Technicolor TG587n v3</ProductClass>
+                <SerialNumber>AA1111AA1AA</SerialNumber>
+            </DeviceId>
+            <Event soap:arrayType="cwmp:EventStruct[02]">
+                <EventStruct>
+                    <EventCode>2 PERIODIC</EventCode>
+                    <CommandKey/>
+                </EventStruct>
+            </Event>
+            <MaxEnvelopes>1</MaxEnvelopes>
+            <CurrentTime>2016-04-08T11:10:28+10:00</CurrentTime>
+            <RetryCount>0</RetryCount>
+            <ParameterList soap:arrayType="cwmp:ParameterValueStruct[08]">
+                <ParameterValueStruct>
+                    <Name>InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.ExternalIPAddress</Name>
+                    <Value xsi:type="xsd:string">111.222.333.44</Value>
+                </ParameterValueStruct>
+                <ParameterValueStruct>
+                    <Name>InternetGatewayDevice.DeviceSummary</Name>
+                    <Value xsi:type="xsd:string">InternetGatewayDevice:1.3[](Baseline:1, EthernetLAN:1, WiFiLAN:1, ADSLWAN:1, EthernetWAN:1, Time:1, IPPing:1, TraceRoute:1, ATMLoopback:1, Download:1, DownloadTCP:1, Upload:1, UploadTCP:1, UDPEcho:1, UDPEchoPlus:1), VoiceService:1.0[1](SIPEndpoint:1, TAEndpoint:1)</Value>
+                </ParameterValueStruct>
+                <ParameterValueStruct>
+                    <Name>InternetGatewayDevice.DeviceInfo.SpecVersion</Name>
+                    <Value xsi:type="xsd:string">1.0</Value>
+                </ParameterValueStruct>
+                <ParameterValueStruct>
+                    <Name>InternetGatewayDevice.DeviceInfo.HardwareVersion</Name>
+                    <Value xsi:type="xsd:string">DANT-Y</Value>
+                </ParameterValueStruct>
+                <ParameterValueStruct>
+                    <Name>InternetGatewayDevice.DeviceInfo.SoftwareVersion</Name>
+                    <Value xsi:type="xsd:string">15.32.6209-440-RA</Value>
+                </ParameterValueStruct>
+                <ParameterValueStruct>
+                    <Name>InternetGatewayDevice.DeviceInfo.ProvisioningCode</Name>
+                    <Value xsi:type="xsd:string">Acme</Value>
+                </ParameterValueStruct>
+                <ParameterValueStruct>
+                    <Name>InternetGatewayDevice.ManagementServer.ParameterKey</Name>
+                    <Value xsi:type="xsd:string">1</Value>
+                </ParameterValueStruct>
+                <ParameterValueStruct>
+                    <Name>InternetGatewayDevice.ManagementServer.ConnectionRequestURL</Name>
+                    <Value xsi:type="xsd:string">http://111.222.333.44:55555/qwuieyqwe776</Value>
+                </ParameterValueStruct>
+            </ParameterList>
+        </cwmp:Inform>
+    </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,38 @@
+
+Data Ingestion Stream
+=====================
+
+xd:>stream create --name tr69_ingest --definition "splunk --host=<host> --username=<username> --password=<password> --owner=<owner> --searchQuery='index=tr069' --fixedDelay=30 --fixedDelayUnit=SECONDS --initEarliestTime='-30d' | cwmp-parser | filter --expression=#root.headers.get('TR69IngestErrorCode')=='0' | hdfs-dataset --inputType='application/x-java-object;type=cxp.ingest.model.InternetGatewayDevice' --format=parquet --fsUri='hdfs://<namenode-host>:8020' --basePath=<basepath>"
+
+# Warning and Error Logging Streams
+
+xd:>stream create --name tr69_ingest_warnings --definition "tap:stream:tr69_ingest.cwmp-parser > filter --expression=#root.headers.get('TR69IngestErrorCode')=='1' | transform --expression=#root.headers.get('TR69IngestErrorMessage')+'|'+#root.headers.get('TR69IngestErrorDump') | file --name=tr69_ingest_warnings.txt --dir=/tmp"
+
+xd:>stream create --name tr69_ingest_errors --definition "tap:stream:tr69_ingest.cwmp-parser > filter --expression=#root.headers.get('TR69IngestErrorCode')=='2' | transform --expression=#root.headers.get('TR69IngestErrorMessage')+'|'+#root.headers.get('TR69IngestErrorDump') | file --name=tr69_ingest_errors.txt --dir=/tmp"
+
+Counter Streams
+===============
+
+xd:>stream create --name tr69_ingest_ok_counter --definition "tap:stream:tr69_ingest.filter > counter --name=tr69_ok_count"
+
+xd:>stream create --name tr69_ingest_warning_counter --definition "tap:stream:tr69_ingest_warnings.filter > counter --name=tr69_warnings_count"
+
+xd:>stream create --name tr69_ingest_error_counter --definition "tap:stream:tr69_ingest_errors.filter > counter --name=tr69_errors_count"
+
+Deploying based on dependencies
+===============================
+
+xd:>stream deploy --name "tr69_ingest_ok_counter"
+
+xd:>stream deploy --name "tr69_ingest_warning_counter"
+
+xd:>stream deploy --name "tr69_errors_count"
+
+xd:>stream deploy --name "tr69_ingest_warning" --properties "module.*.criteria=groups.contains('openvpn-01')"
+
+xd:>stream deploy --name "tr69_ingest_errors" --properties "module.*.criteria=groups.contains('openvpn-01')"
+
+xd:>stream deploy --name tr69_ingest --properties "module.*.criteria=groups.contains('openvpn-01')"
+
+
+xd:>stream create --name tr069_daily_export2 --definition "file --dir=<path-to>/tr069 --pattern=*.raw --mode=lines --preventDuplicates=true --fixedDelay=120 | cwmp | filter --expression=#root.headers.get('TR69IngestErrorCode')=='0' --outputType=application/json | rollingfileprocessor --dir=<path-to>/tr069/processing/ --fileName='${xd.stream.name}-${xd.container.host}-${xd.container.pid}.json' --filePattern='${xd.stream.name}_%d{yyyyMMdd_HHmmss}.json' --rollingFileSize=2048MB --filesToKeep=1000 --rolloverIdleTimeout=120 | script --script=file://<path-to>/scripts/file-to-tuple.groovy | log --level=WARN" --deploy

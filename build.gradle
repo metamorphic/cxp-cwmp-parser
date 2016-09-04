@@ -1,0 +1,94 @@
+// Build for a particular environment using `gradle -Penv=local build`
+
+buildscript {
+    repositories {
+        maven {
+            //Disable httpProxy in .gradle/gradle.properties to use artifactory
+            url "${artifactory_pluginsUrl}"
+            credentials {
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+            }
+        }
+    }
+    dependencies {
+        //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.2.0'
+        classpath 'org.springframework.xd:spring-xd-module-plugin:1.3.1.RELEASE'
+    }
+}
+
+ext {
+    springXdVersion = '1.3.1.RELEASE'
+    environment = 'dev'
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-xd-module'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.artifactory'
+
+group = 'io.metamorphic'
+version = '1.0'
+description = 'Spring XD CWMP (TR069) Parser'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
+jar {
+    baseName = 'cwmp-parser'
+    version = '1.0'
+}
+
+artifactory {
+    contextUrl = "${artifactory_contextUrl}"   //The base Artifactory URL if not overridden by the publisher/resolver
+    publish {
+        repository {
+            repoKey = 'libs-release-local'
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
+        defaults {
+            publications ('mavenJava')
+        }
+    }
+    resolve {
+        repository {
+            repoKey = 'libs-release'
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
+    }
+}
+
+dependencies {
+    // added to allow Nullable annotation
+    compile 'org.apache.avro:avro:1.8.0'
+    compile 'com.google.guava:guava:19.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.0'
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'org.apache.commons:commons-io:1.3.2'
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+// see https://github.com/spring-projects/spring-boot/issues/2679
+// must be a spring-boot dependency from spring-xd-module-plugin
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2'
+}

@@ -1,0 +1,11 @@
+val test = sqlContext.read.load("hdfs://localhost:9000/xd/splunktest/testmodel")
+
+test.printSchema
+
+test.show
+
+val withDate = test.withColumn("request_dt", col("requestTime").cast("date"))
+
+withDate.printSchema
+
+withDate.show

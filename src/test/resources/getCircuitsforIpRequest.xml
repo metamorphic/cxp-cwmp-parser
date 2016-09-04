@@ -1,0 +1,9 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header/>
+    <SOAP-ENV:Body>
+        <ns2:getCircuitsforIpRequest xmlns:ns2="http://sessiontracker2.services.bigpond.com/wsdl/xsd">
+            <ns2:ipAddress>222.33.44.55</ns2:ipAddress>
+            <ns2:eventCode>4</ns2:eventCode>
+        </ns2:getCircuitsforIpRequest>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

@@ -1,0 +1,80 @@
+message cxp.ingest.model.GenericInternetGatewayDevice {
+  optional binary cwmpMessageType (UTF8);
+  optional group httpHeaders (MAP) {
+    repeated group map (MAP_KEY_VALUE) {
+      required binary key (UTF8);
+      required binary value (UTF8);
+    }
+  }
+  optional int64 eventTime;
+  optional binary manufacturer (UTF8);
+  optional binary manufacturerOUI (UTF8);
+  optional binary productClass (UTF8);
+  optional binary serialNumber (UTF8);
+  optional group event (MAP) {
+    repeated group map (MAP_KEY_VALUE) {
+      required binary key (UTF8);
+      required binary value (UTF8);
+    }
+  }
+  optional int32 retryCount;
+  optional group deviceSummaries (LIST) {
+    repeated group array (MAP) {
+      repeated group map (MAP_KEY_VALUE) {
+        required binary key (UTF8);
+        required binary value (UTF8);
+      }
+    }
+  }
+  optional group parameterList (MAP) {
+    repeated group map (MAP_KEY_VALUE) {
+      required binary key (UTF8);
+      required binary value (UTF8);
+    }
+  }
+  optional binary transferCommandKey (UTF8);
+  optional binary transferFaultCode (UTF8);
+  optional binary transferFaultString (UTF8);
+  optional int64 transferStartTime;
+  optional int64 transferEndTime;
+  optional binary wanPPPConnectionUsername (UTF8);
+  optional binary hardwareVersion (UTF8);
+  optional binary softwareVersion (UTF8);
+  optional binary modemFirmwareVersion (UTF8);
+  optional binary managementServerURL (UTF8);
+  optional binary managementServerUsername (UTF8);
+  optional int32 upTime;
+  optional int32 lanDeviceTotalAssociations;
+  optional int32 lanDeviceTotalPskFailures;
+  optional boolean lanDeviceAutoChannelEnable;
+  optional int32 lanDeviceErrorsReceived;
+  optional int32 lanDeviceErrorsSent;
+  optional boolean lanDeviceCrcError;
+  optional int32 lanDeviceNumberFailedFrames;
+  optional int32 lanDevicePacketsErrored;
+  optional int32 lanDevicePacketsDropped;
+  optional int32 lanDeviceTotalBytesReceived;
+  optional int32 lanDeviceTotalBytesSent;
+  optional int32 lanDeviceTotalPacketsReceived;
+  optional int32 lanDeviceTotalPacketsSent;
+  optional int32 wanDeviceTotalBytesReceived;
+  optional int32 wanDeviceTotalBytesSent;
+  optional int32 wanDeviceTotalPacketsReceived;
+  optional int32 wanDeviceTotalPacketsSent;
+  optional binary lanDeviceStandard (UTF8);
+  optional binary lanDeviceBasicEncryptionModes (UTF8);
+  optional binary lanDeviceWpaEncryptionModes (UTF8);
+  optional int32 totalMemory;
+  optional int32 freeMemory;
+  optional double cpuUsage;
+  optional int32 processNumberEntries;
+  optional binary wanDeviceUpstreamAttenuation (UTF8);
+  optional binary wanDeviceDownstreamAttenuation (UTF8);
+  optional boolean lanDeviceHostActive;
+  optional binary lanDeviceAssociatedDeviceMacAddress (UTF8);
+  optional binary lanDeviceAssociatedDeviceIpAddress (UTF8);
+  optional binary lanDeviceAssociatedDeviceAuthenticationState (UTF8);
+  optional binary lanDeviceAssociatedDeviceType (UTF8);
+  optional binary sessionId (UTF8);
+}
+

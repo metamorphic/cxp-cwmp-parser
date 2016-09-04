@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Body>
+        <getCircuitsforIpResponse xmlns="http://sessiontracker2.services.bigpond.com/wsdl/xsd">
+            <arrayOfCircuits xsi:type="ns1:circuits" xmlns:ns1="http://sessiontracker2.services.bigpond.com/wsdl/xsd">
+                <ns1:circuit>A0242852487</ns1:circuit>
+                <ns1:sessionStartTime>2016-04-13T07:20:16.000Z</ns1:sessionStartTime>
+            </arrayOfCircuits>
+        </getCircuitsforIpResponse>
+    </soapenv:Body>
+</soapenv:Envelope>
